@@ -35,7 +35,15 @@ You need GENIE and ROOT setup with their usual environmental variables defined. 
 It's a simple command line program.  
 
 ```
-./overlay_genie -h
+NAME:    overlay_genie
+DESCRIPTION: 
+  Overlays multiple genie ghep files (sources) into a single genie ghep file so
+as to simulate neutrino beam spills. Includes options to specify the number of
+events per spill, to specify their frequency distribution, and to array them in
+time.
+
+A full description maybe found at https://github.com/GENIEMC/OverlayGenie
+
 USAGE:  overlay_genie [options]
 
 NOTE: short option flags must not have a space between the flag and the option
@@ -67,6 +75,7 @@ Options:
  -n --nspills (integer)
       Note: we cannot guarantee nspills as one of the sources
       may run out first. It is a target/maximum.
+
 ```
 ## Example invocation
 ```
@@ -122,7 +131,7 @@ This option `--time_hist=spill_profile.root,my_hist` would cause the program to 
 
 The *Poisson assure non-zero* option is useful when there are important low mass regions in the detector where one wants many events for physics studies. Often the mass is low enough that simply using GENIE to generate events on the whole geometry and then picking out the (potentially very small) subset of useful events is impractical. Instead, a better idea is to use GENIE to generate a set of events only in the low mass region (which can be done efficiently) and then overlay those events with ones from (more dense) parts of the geometry.  The program facilitates this by pulling events according to a Poisson distribution with mean `mu` and requiring that at least one event is pulled.  In that case the event needs to be down-weighted when used to make distributions. The down-weight is simply the probability of *not* pulling zero events from a Poisson distribution with parameter `mu`: `1-exp(-mu)`.  The weight is saved in the event's `GHepRecord` via `GHepRecord::SetWeight`.
 
-It may be useful to produce biased spills only some fraction of the time. A third parameter (with value `0.65`) is used to control this. Here, 65% of the program will assure at least one event is produced. One or more events can still be pulled the other 35% of the time according to usual Poisson statistics. In that case the event weight is just 1.
+It may be useful to produce biased spills only some fraction of the time. A third parameter (with value `0.65` in the example above) is used to control this. Here, 65% of the program will assure at least one event is produced. One or more events can still be pulled the other 35% of the time according to usual Poisson statistics. In that case the event weight is just 1.
 
 
 ## A spill ending dummy event
