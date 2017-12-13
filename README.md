@@ -35,7 +35,15 @@ You need GENIE and ROOT setup with their usual environmental variables defined. 
 It's a simple command line program.  
 
 ```
-./overlay_genie -h
+NAME:    overlay_genie
+DESCRIPTION: 
+  Overlays multiple genie ghep files (sources) into a single genie ghep file so
+as to simulate neutrino beam spills. Includes options to specify the number of
+events per spill, to specify their frequency distribution, and to array them in
+time.
+
+A full description maybe found at https://github.com/GENIEMC/OverlayGenie
+
 USAGE:  overlay_genie [options]
 
 NOTE: short option flags must not have a space between the flag and the option
@@ -67,6 +75,7 @@ Options:
  -n --nspills (integer)
       Note: we cannot guarantee nspills as one of the sources
       may run out first. It is a target/maximum.
+
 ```
 ## Example invocation
 ```
