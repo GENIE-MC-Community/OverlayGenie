@@ -1,3 +1,17 @@
+//____________________________________________________________________________
+/*!
+
+\program event_source
+
+\brief   A class for managing a source of genie ghep events
+
+\author  Mike Kordosky, Wiliam and Mary.
+
+\created Nov 6, 2017
+
+*/
+//____________________________________________________________________________
+
 #include "event_source.h"
 #include "TRandom.h"
 #include "TRandom3.h"

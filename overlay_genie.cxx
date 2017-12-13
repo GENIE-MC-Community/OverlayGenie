@@ -3,11 +3,13 @@
 
 \program overlay_genie
 
-\brief   Read in several genie ntuples and combined them to produce an ntuple appropriate for simulating overlaid spills.  
+\brief   Read in several genie ghep ntuples and combine them to produce an ghep ntuple appropriate for simulating overlaid spills.  
 
-\author  Mike Kordosky. Makefile from GENIE gtestEventLoop.cxx
+\author  Mike Kordosky, Wiliam and Mary.
 
 \created Nov 6, 2017
+
+\note  Makefile from GENIE gtestEventLoop.cxx
 
 */
 //____________________________________________________________________________

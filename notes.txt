@@ -1,0 +1,52 @@
+
+./overlay_genie --source=/dune/app/users/kordosky/nd_sim/event_gen/spill_argoncube_dipole_stt.[0-2].ghep.root,gtree,2718,10,y,poisson,50  --source=/dune/app/users/kordosky/nd_sim/event_gen/100_in_gartpc.0.ghep.root,gtree,314159,1,n,fixed,1 --nspills=3 --output=overlay_genie.root,gtree 
+
+|------------------------------------------------------------------------------------------------------------------|
+|GENIE GHEP Event Record [print level:   3]                                                                        |
+|------------------------------------------------------------------------------------------------------------------|
+| Idx |          Name | Ist |        PDG |   Mother  | Daughter  |      Px |      Py |      Pz |       E |      m  | 
+|------------------------------------------------------------------------------------------------------------------|
+|   0 |       Rootino |  -1 |          0 |   0 |   0 |   0 |   0 |   0.000 |   0.000 |   0.000 |   0.000 |   0.000 | 
+|------------------------------------------------------------------------------------------------------------------|
+|       Fin-Init:                                                |   0.000 |   0.000 |   0.000 |   0.000 |         | 
+|------------------------------------------------------------------------------------------------------------------|
+| Err flag [bits:15->0] : 0000000000000000    |  1st set:                                                     none | 
+| Err mask [bits:15->0] : 1111111111111111    |  Is unphysical:    NO |   Accepted:   YES                          |
+|------------------------------------------------------------------------------------------------------------------|
+| sig(Ev) =       0.00000e+00 cm^2  | dsig(Ev;{K_s})/dK   =     0.00000e+00 cm^2/{K}   | Weight =          1.00000 |
+|------------------------------------------------------------------------------------------------------------------|
+
+--------------------------------------------------------------------------------------------------------------
+GENIE Interaction Summary
+--------------------------------------------------------------------------------------------------------------
+[-] [Init-State] 
+ |--> probe        : PDG-code = 0 (Rootino)
+ |--> nucl. target : Z = 0, A = 0, PDG-Code = 0 (Rootino)
+ |--> hit nucleon  : no set
+ |--> hit quark    : no set
+ |--> probe 4P     : (E =     0.000000, Px =     0.000000, Py =     0.000000, Pz =     0.000000)
+ |--> target 4P    : (E =     0.000000, Px =     0.000000, Py =     0.000000, Pz =     0.000000)
+
+[-] [Process-Info]  
+ |--> Interaction : Unknown
+ |--> Scattering  : Unknown
+[-] [Kinematics]
+[-] [Exclusive Process Info] 
+ |--> charm prod.  : false |--> strange prod.  : false
+ |--> f/s nucleons : N(p) = 0 N(n) = 0
+ |--> f/s pions    : N(pi^0) = 0 N(pi^+) = 0 N(pi^-) = 0
+ |--> resonance    : [not set]
+--------------------------------------------------------------------------------------------------------------
+
+
+gntpc -i overlay_genie.root -f rootracker -o rootracker.0.root 
+
+# run overlay with a time profile histogram
+./overlay_genie --source=/dune/app/users/kordosky/nd_sim/event_gen/spill_argoncube_dipole_stt.[0-2].ghep.root,gtree,2718,10,y,poisson,50  --source=/dune/app/users/kordosky/nd_sim/event_gen/100_in_gartpc.0.ghep.root,gtree,314159,1,n,fixed,1 --nspills=3 --output=overlay_genie.root,gtree --time_hist=spill_profile.root,spill_profile
+
+# run overlay with a time range
+./overlay_genie --source=/dune/app/users/kordosky/nd_sim/event_gen/spill_argoncube_dipole_stt.[0-2].ghep.root,gtree,2718,10,y,poisson,50  --source=/dune/app/users/kordosky/nd_sim/event_gen/100_in_gartpc.0.ghep.root,gtree,314159,1,n,fixed,1 --nspills=3 --output=overlay_genie.root,gtree --time_range=1100.0,10900
+
+# run with a poisson_anz source
+
+./overlay_genie --source=/dune/app/users/kordosky/nd_sim/event_gen/spill_argoncube_dipole_stt.[0-2].ghep.root,gtree,2718,10,y,poisson,50  --source=/dune/app/users/kordosky/nd_sim/event_gen/100_in_gartpc.0.ghep.root,gtree,314159,1,n,fixed,1  --source=/dune/app/users/kordosky/nd_sim/event_gen/1k_in_tracker.ghep.root,gtree,1234,1,y,poisson_anz,0.1,1.0 --nspills=3 --output=overlay_genie.root,gtree --time_range=1100.0,10900
