@@ -70,7 +70,11 @@ const char* source_help=" --source, -s  \t specify a neutrino source and overlay
 
 const option::Descriptor usage[] =
 {
- {UNKNOWN, 0,"" , ""    ,option::Arg::None, "USAGE:  overlay_genie [options]\n\n"
+ {UNKNOWN, 0,"" , ""    ,option::Arg::None, 
+"NAME:    overlay_genie\n" 
+"DESCRIPTION: \n  Overlays multiple genie ghep files (sources) into a single genie ghep file so as to simulate neutrino beam spills. Includes options to specify the number of events per spill, to specify their frequency distribution, and to array them in time.\n\n"
+"A full description maybe found at https://github.com/GENIEMC/OverlayGenie\n\n"
+"USAGE:  overlay_genie [options]\n\n"
   "NOTE: short option flags must not have a space between the flag and the option\n"
   "NOTE: long option flags must have an = between the flag and the option\n"
   "      -xmyoption is OK as is --longx=myoption\n"
