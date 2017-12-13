@@ -80,7 +80,9 @@ This overlays events from three sources. Each source contains `TTrees` with the 
 
 ### Source 1
 *This is an example of how one might use a source of background events, perhaps from the cavern rock.*
+
 `--source=/full/path/to/ntuplesA_[0-2].ghep.root,gtree,2718,10,y,poisson,50`
+
 * Consists of three files. The regular expression syntax will be interpreted by `TChain::Add()`. 
 * The random seed used to initialize the source's `TRandom3` generator is 2718
 * Events can be used up to 10 times.
@@ -88,7 +90,9 @@ This overlays events from three sources. Each source contains `TTrees` with the 
 * Events will be pulled according to a Poisson distribution with mu=50.
 
 ### Source 2
+
 `--source=/full/path/to/ntupleB.ghep.root,gtree,314159,1,n,fixed,1`
+
 * Consists of a single file.
 * The seed is 314159.
 * Events can be reused only once and are read linearly (there would be no point in reading them randomly but one could request it).
@@ -96,13 +100,16 @@ This overlays events from three sources. Each source contains `TTrees` with the 
 
 ### Source 3
 *This is an example of how one might use a source of signal events occuring in a low mass detector*
+
 `--source=/full/path/to/ntupleC.ghep.root,gtree,1234,1,y,poisson_anz,0.13,0.65`
+
 * Consists of a single file.
 * The seed is 1234.
 * Events can be reused only once and are read linearly.
 * Events are pulled according to a Poisson distribution with mu=0.13. However 65% of the time (the final `0.65` above) the program will guarantee that at least one event is pulled. In that case an event weight will be provided and written into the output ntuple (see below for details).
 
 ### Other options
+
 * Three spills are requested and will be generated unless one of the other stopping conditions is encountered (see above).
 * The output is a file `overlay_genie.root` with ghep ntuple inside called `gtree`.
 * Events in each spill will be scattered uniformly in a time range of 1100ns to 10900ns. 
@@ -111,7 +118,11 @@ One could alternatively specify a histogram that will be sampled by `TH1::GetRan
 
 This option `--time_hist=spill_profile.root,my_hist` would cause the program to try and use a histogram called `my_hist` in the file spill_profile.root (contained in the working directory in this example, but a full path can also be specified). 
 
+### Assure non-zero and weights
 
+The *Poisson assure non-zero* option is useful when there are important low mass regions in the detector where one wants many events for physics studies. Often the mass is low enough that simply using GENIE to generate events on the whole geometry and then picking out the (potentially very small) subset of useful events is impractical. Instead, a better idea is to use GENIE to generate a set of events only in the low mass region (which can be done efficiently) and then overlay those events with ones from (more dense) parts of the geometry.  The program facilitates this by pulling events according to a Poisson distribution with mean `mu` and requiring that at least one event is pulled.  In that case the event needs to be down-weighted when used to make distributions. The down-weight is simply the probability of *not* pulling zero events from a Poisson distribution with parameter `mu`: `1-exp(-mu)`.  The weight is saved in the event's `GHepRecord` via `GHepRecord::SetWeight`.
+
+It may be useful to produce biased spills only some fraction of the time. A third parameter (with value `0.65`) is used to control this. Here, 65% of the program will assure at least one event is produced. One or more events can still be pulled the other 35% of the time according to usual Poisson statistics. In that case the event weight is just 1.
 
 
 ## A spill ending dummy event
