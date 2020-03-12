@@ -1,0 +1,5 @@
+*.o
+overlay_genie
+bin/
+build/
+lib/
