@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.00)
-project (RockPropGENIE)
+project (OverlayGenie)
 
 if( NOT CMAKE_BUILD_TYPE )
   set( CMAKE_BUILD_TYPE Debug CACHE STRING
