@@ -1,4 +1,7 @@
 # OverlayGenie
+
+[![Build Status](https://travis-ci.org/ebrianne/OverlayGenie.svg?branch=master)](https://travis-ci.org/ebrianne/OverlayGenie)
+
 OverlayGenie is a program that takes events from multiple genie ghep ntuples (event sources) and creates an overlay ntuple, combining the different event sources in a way that the user can control. This is useful for simulating neutrino beam spills in the case that some elements of the geometry are much less dense but important to have events in (with weighting) or the alternative case in which some of the geometry is just generating background events that could be reused to make the generation more efficient.
 ## Dependencies
 The only external dependencies are ROOT and GENIE. Commandline options are handled by [optionparser]( http://optionparser.sourceforge.net/ "Lean Mean C++ Option Parser page on SourceForge") which is included via a header file.
@@ -15,14 +18,14 @@ The program was developed against GENIE v2.12.6 and ROOT 6.08/06. The developmen
   * Uniformly in a time range.
   * Or according to a ROOT `TH1`.
   In either case the events are later time ordered.
-4. Events from each source can be reused as many times as is desired. 
+4. Events from each source can be reused as many times as is desired.
 5. The event sources can be read and used linearly or randomly.
 ## Output and stopping condition
 
 The output is a single ROOT ntuple file containing one GENIE ghep event in each entry. Spills endings are marked by dummy events containing a single "Rootino" (`ipdg==0`). (see example below)
 
 The program exits after:
-1. generating the requested number of spills 
+1. generating the requested number of spills
 2. or just before reusing an event more than the requested number of times.
 3. or when one of the sources runs out of events
 
@@ -36,7 +39,7 @@ It's a simple command line program.
 
 ```
 NAME:    overlay_genie
-DESCRIPTION: 
+DESCRIPTION:
   Overlays multiple genie ghep files (sources) into a single genie ghep file so
 as to simulate neutrino beam spills. Includes options to specify the number of
 events per spill, to specify their frequency distribution, and to array them in
@@ -66,8 +69,8 @@ Options:
       - poisson_anz,<mu>,<frac> (float),(float)
           like poisson but <frac> of the time generate a non-zero result
           distributed according to a Poisson with parameter <mu>
-          the method doing this also returns a weight which it 
-          records in the GHEPRecord::Weight() for all events 
+          the method doing this also returns a weight which it
+          records in the GHEPRecord::Weight() for all events
           created by this poisson_anz source for a given spill
  -o --output outputfile.root,ntuplename
  -R --time_range (float),(float)
@@ -92,7 +95,7 @@ This overlays events from three sources. Each source contains `TTrees` with the 
 
 `--source=/full/path/to/ntuplesA_[0-2].ghep.root,gtree,2718,10,y,poisson,50`
 
-* Consists of three files. The regular expression syntax will be interpreted by `TChain::Add()`. 
+* Consists of three files. The regular expression syntax will be interpreted by `TChain::Add()`.
 * The random seed used to initialize the source's `TRandom3` generator is 2718
 * Events can be used up to 10 times.
 * The file will be read randomly (`y` option)
@@ -121,11 +124,11 @@ This overlays events from three sources. Each source contains `TTrees` with the 
 
 * Three spills are requested and will be generated unless one of the other stopping conditions is encountered (see above).
 * The output is a file `overlay_genie.root` with ghep ntuple inside called `gtree`.
-* Events in each spill will be scattered uniformly in a time range of 1100ns to 10900ns. 
+* Events in each spill will be scattered uniformly in a time range of 1100ns to 10900ns.
 
 One could alternatively specify a histogram that will be sampled by `TH1::GetRandom()` to simulate the time profile:
 
-This option `--time_hist=spill_profile.root,my_hist` would cause the program to try and use a histogram called `my_hist` in the file spill_profile.root (contained in the working directory in this example, but a full path can also be specified). 
+This option `--time_hist=spill_profile.root,my_hist` would cause the program to try and use a histogram called `my_hist` in the file spill_profile.root (contained in the working directory in this example, but a full path can also be specified).
 
 ## Assure non-zero and weights
 
@@ -139,13 +142,13 @@ It may be useful to produce biased spills only some fraction of the time. A thir
 |------------------------------------------------------------------------------------------------------------------|
 |GENIE GHEP Event Record [print level:   3]                                                                        |
 |------------------------------------------------------------------------------------------------------------------|
-| Idx |          Name | Ist |        PDG |   Mother  | Daughter  |      Px |      Py |      Pz |       E |      m  | 
+| Idx |          Name | Ist |        PDG |   Mother  | Daughter  |      Px |      Py |      Pz |       E |      m  |
 |------------------------------------------------------------------------------------------------------------------|
-|   0 |       Rootino |  -1 |          0 |   0 |   0 |   0 |   0 |   0.000 |   0.000 |   0.000 |   0.000 |   0.000 | 
+|   0 |       Rootino |  -1 |          0 |   0 |   0 |   0 |   0 |   0.000 |   0.000 |   0.000 |   0.000 |   0.000 |
 |------------------------------------------------------------------------------------------------------------------|
-|       Fin-Init:                                                |   0.000 |   0.000 |   0.000 |   0.000 |         | 
+|       Fin-Init:                                                |   0.000 |   0.000 |   0.000 |   0.000 |         |
 |------------------------------------------------------------------------------------------------------------------|
-| Err flag [bits:15->0] : 0000000000000000    |  1st set:                                                     none | 
+| Err flag [bits:15->0] : 0000000000000000    |  1st set:                                                     none |
 | Err mask [bits:15->0] : 1111111111111111    |  Is unphysical:    NO |   Accepted:   YES                          |
 |------------------------------------------------------------------------------------------------------------------|
 | sig(Ev) =       0.00000e+00 cm^2  | dsig(Ev;{K_s})/dK   =     0.00000e+00 cm^2/{K}   | Weight =          1.00000 |
@@ -154,7 +157,7 @@ It may be useful to produce biased spills only some fraction of the time. A thir
 --------------------------------------------------------------------------------------------------------------
 GENIE Interaction Summary
 --------------------------------------------------------------------------------------------------------------
-[-] [Init-State] 
+[-] [Init-State]
  |--> probe        : PDG-code = 0 (Rootino)
  |--> nucl. target : Z = 0, A = 0, PDG-Code = 0 (Rootino)
  |--> hit nucleon  : no set
@@ -166,7 +169,7 @@ GENIE Interaction Summary
  |--> Interaction : Unknown
  |--> Scattering  : Unknown
 [-] [Kinematics]
-[-] [Exclusive Process Info] 
+[-] [Exclusive Process Info]
  |--> charm prod.  : false |--> strange prod.  : false
  |--> f/s nucleons : N(p) = 0 N(n) = 0
  |--> f/s pions    : N(pi^0) = 0 N(pi^+) = 0 N(pi^-) = 0
